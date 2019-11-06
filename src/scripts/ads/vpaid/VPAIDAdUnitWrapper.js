@@ -175,9 +175,6 @@ VPAIDAdUnitWrapper.prototype.resizeAd = function (width, height, viewMode, cb) {
   // and will assume that everything is fine after the async call
 	logger.log('VPAIDAdUnitWrapper->Calling resizeAd on creative');
   this.adUnitAsyncCall('resizeAd', width, height, viewMode, cb);
-  if (window.MoatApiReference) {
-  	window.MoatApiReference.dispatchEvent({type: 'AdSizeChange', adVolume: this.options.player.volume()});
-  }
 };
 
 VPAIDAdUnitWrapper.prototype.startAd = function (cb) {

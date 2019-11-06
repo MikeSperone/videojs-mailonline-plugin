@@ -28,9 +28,6 @@ function InLine (inlineJTree) {
   this.errors = vastUtil.parseErrors(inlineJTree.error);
   this.pricing = xml.keyValue(inlineJTree.pricing);
   this.extensions = inlineJTree.extensions;
-  if (this.extensions) {
-	  this.moat = parseMoat(this.extensions);
-  }
   if (window.mol_vastVersion === 4) {
 	  if (inlineJTree.category) {
 		  this.categories = Category.parseCategories(inlineJTree.category);
@@ -60,30 +57,6 @@ function InLine (inlineJTree) {
     return [];
   }
 
-  function parseMoat (extensions) {
-	  var getMoatConfigData = function (arrExtentions) {
-		  for (var i = 0; i < arrExtentions.length; i++) {
-			  var extension = arrExtentions[i].extension;
-			  if (extension && extension.moat) {
-				  var moat = {};
-				  var value = xml.keyValue(extension.moat);
-				  var arr = value.split(';');
-				  for (var j = 0; j < arr.length; j++) {
-					  var params = arr[j].split('=');
-					  if (params && params.length === 2) {
-						  moat[params[0]] = params[1];
-					  }
-				  }
-				  return moat;
-			  }
-		  }
-		  return undefined;
-	  };
-	  if (extensions) {
-		  return getMoatConfigData(utilities.isArray(extensions) ? extensions : [extensions]);
-	  }
-	  return undefined;
-  }
 }
 
 

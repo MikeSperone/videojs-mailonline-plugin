@@ -51,9 +51,6 @@ VASTIntegrator.prototype.playAd = function playAd (vastResponse, callback) {
     this._playSelectedAd.bind(this)
   ], function (error, response) {
     if (error && response) {
-        if (window.MoatApiReference) {
-        	window.MoatApiReference.dispatchEvent({type: 'AdError', adVolume: that.player.volume()});
-        }
       that._trackError(error, response);
     }
     callback(error, response);
@@ -131,10 +128,6 @@ VASTIntegrator.prototype._setupEvents = function setupEvents (adMediaFile, track
     if (evt.type === 'vast.adEnd') {
       tracker.trackComplete();
     }
-    if (window.MoatApiReference) {
-    	var type = evt.type === 'vast.adEnd' ? 'AdVideoComplete' : 'AdStopped';
-  	  window.MoatApiReference.dispatchEvent({type: type, adVolume: player.volume()});
-    }
   });
 
   player.one('adStop', function () {
@@ -175,16 +168,10 @@ VASTIntegrator.prototype._setupEvents = function setupEvents (adMediaFile, track
 	      return;
 	    }
 
-    if (window.MoatApiReference) {
-    	  window.MoatApiReference.dispatchEvent({type: 'AdPaused', adVolume: player.volume()});
-    }
     tracker.trackPause();
     playerUtils.showBigPlayButton(player, true);
     playerUtils.once(player, ['play', 'vast.adEnd', 'vast.adsCancel'], function (evt) {
       if (evt.type === 'play') {
-	    if (window.MoatApiReference) {
-	    	  window.MoatApiReference.dispatchEvent({type: 'AdPlaying', adVolume: player.volume()});
-	    }
         tracker.trackResume();
         playerUtils.showBigPlayButton(player, false);
       }
@@ -197,17 +184,11 @@ VASTIntegrator.prototype._setupEvents = function setupEvents (adMediaFile, track
   }
 
   function trackImpressions () {
-    if (window.MoatApiReference) {
-    	  window.MoatApiReference.dispatchEvent({type: 'AdImpression', adVolume: player.volume()});
-    }
     tracker.trackImpressions();
     tracker.trackCreativeView();
   }
 
   function trackVolumeChange () {
-    if (window.MoatApiReference) {
-  	  window.MoatApiReference.dispatchEvent({type: 'AdVolumeChange', adVolume: player.volume()});
-    }
     var muted = player.muted();
     if (muted) {
       tracker.trackMute();
@@ -251,9 +232,6 @@ VASTIntegrator.prototype._addSkipButton = function addSkipButton (source, tracke
 
     skipButton.onclick = function (e) {
       if (dom.hasClass(skipButton, 'enabled')) {
-          if (window.MoatApiReference) {
-        	  window.MoatApiReference.dispatchEvent({type: 'AdSkipped', adVolume: player.volume()});
-          }
         tracker.trackSkip();
         player.trigger('vast.adSkip');
       }
@@ -340,9 +318,6 @@ VASTIntegrator.prototype._addClickThrough = function addClickThrough (mediaFile,
         player.pause();
         tracker.trackClick();
 
-        if (window.MoatApiReference) {
-          window.MoatApiReference.dispatchEvent({type: 'AdClickThru', adVolume: player.volume()});
-        }
         if (utilities.isIDevice()) {
           // We are using window.open to navigate for iOS.
           setTimeout(function () {
@@ -451,9 +426,6 @@ VASTIntegrator.prototype._addClickThroughDivBlocker = function addClickThrough (
 		      player.pause();
 		      tracker.trackClick();
 
-		      if (window.MoatApiReference) {
-		    	  window.MoatApiReference.dispatchEvent({type: 'AdClickThru', adVolume: player.volume()});
-		      }
 
 		      // create IFrame with back button
 		      iFrame = window.document.createElement('iframe');
@@ -551,8 +523,6 @@ VASTIntegrator.prototype._playSelectedAd = function playSelectedAd (source, resp
     return;
   }
 
-  // window.MoatApiReference = null;
-
   player.preload('auto'); // without preload=auto the durationchange event is never fired
   player.src(source);
 
@@ -576,27 +546,6 @@ VASTIntegrator.prototype._playSelectedAd = function playSelectedAd (source, resp
         return;
       }
 
-      /* Copyright (c) 2011-2016 Moat Inc. All Rights Reserved. */
-      /*
-      function initMoatTracking(a,c,d,h,k){var f=document.createElement("script"),b=[];c={adData:{ids:c,duration:d,url:k},dispatchEvent:function(a){this.sendEvent?(b&&(b.push(a),a=b,b=!1),this.sendEvent(a)):b.push(a)}};d="_moatApi"+Math.floor(1E8*Math.random());var e,g;try{e=a.ownerDocument,g=e.defaultView||e.parentWindow}catch(l){e=document,g=window}g[d]=c;f.type="text/javascript";a&&a.insertBefore(f,a.childNodes[0]||null);f.src="https://z.moatads.com/"+h+"/moatvideo.js#"+d;return c};
-      window.MoatApiReference = null;
-      if (response.ads && response.ads.length > 0 && response.ads[0].inLine && response.ads[0].inLine.moat) {
-    	  var ids = {level1: response.ads[0].inLine.moat.advid,
-    			     level2: response.ads[0].inLine.moat.cpgid,
-    			     level3: response.ads[0].inLine.moat.cpid,
-    			     level4: response.ads[0].inLine.moat.crid};
-    	  if (response.ads[0].inLine.moat.site_id) {
-    		  ids.slicer1 = response.ads[0].inLine.moat.site_id;
-    	  }
-    	  window.MoatApiReference = initMoatTracking(player.el_, ids, player.duration(), response.ads[0].inLine.moat.partnercode, player.currentSource().src);
-    	  //window.MoatApiReference = initMoatTracking(player.el_, ids, player.duration(), 'ninemediavpaid78961164', player.currentSource().src);
-      }
-      if (window._molSettings.viewabilityTracking) {
-    	  window._molSettings.viewabilityTracking.init(window._molSettings.viewability.contextId,
-    			  player.duration(), player.el_.offsetWidth, player.el_.offsetHeight);
-      }
-      */
-
       logger.debug('<VASTIntegrator._playSelectedAd/playAd> got playing event; triggering vast.adStart...');
 
       player.trigger('vast.adStart');
@@ -608,10 +557,6 @@ VASTIntegrator.prototype._playSelectedAd = function playSelectedAd (source, resp
           		player.userActive(true);
           	}, i * 2000);
           }
-      }
-
-      if (window.MoatApiReference) {
-    	  window.MoatApiReference.dispatchEvent({type: 'AdVideoStart', adVolume: player.volume()});
       }
 
       player.on('ended', proceed);
