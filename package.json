@@ -1,17 +1,14 @@
 {
-  "name": "@appnexus/videojs-vast-vpaid",
+  "name": "@speronem/videojs-vast-vpaid",
   "version": "1.3.14",
   "authors": [
     "Carlos Serrano <carlos.pastor@mailonline.co.uk>"
   ],
-  "description": "VAST plugin to use with video.js",
+  "description": "VAST plugin to use with video.js - forked",
   "main": "bin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/prebid/videojs-mailonline-plugin.git"
-  },
-  "publishConfig": {
-    "registry": "https://artifactory.prod.adnxs.net/artifactory/api/npm/npm/"
+    "url": "https://github.com/MikeSperone/videojs-mailonline-plugin.git"
   },
   "keywords": [
     "vpaid",
@@ -24,7 +21,8 @@
     "iab"
   ],
   "scripts": {
-    "test": "gulp ci-test",
+    "test": "gulp test",
+    "test:ci": "gulp ci-test",
     "build-dev": "webpack --config webpack.dev.js",
     "build-prod": "webpack --config webpack.prod.js"
   },

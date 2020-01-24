@@ -1,3 +1,7 @@
+This project is forked from [prebid/videojs-mailonline-plugin](https://github.com/prebid/videojs-mailonline-plugin)
+
+I created 2 branches with an update to be compatible with videojs 7.  I did not create a PR becuase this fix breaks a bugfix from prebid's fork (which I determined does not affect me and my use case).  I also created the no-moat branch which removes moat as I also do not currently require them as a vendor in my use case.
+
 # videojs-vast-vpaid plugin
 
 This plugin is used to render video ads inside of a videojs player.  It originated from the MailOnline/videojs-vast-vpaid plugin (version 0.0.0 dated Sep 28, 2016) which was created to allow videojs to monetise its videos. This plugin implementation includes some modifications whose purpose is to enhance and extend video ad playback behavior.
