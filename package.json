@@ -5,7 +5,7 @@
     "Carlos Serrano <carlos.pastor@mailonline.co.uk>"
   ],
   "description": "VAST plugin to use with video.js - forked",
-  "main": "bin",
+  "main": "dist",
   "repository": {
     "type": "git",
     "url": "https://github.com/MikeSperone/videojs-mailonline-plugin.git"
