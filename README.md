@@ -1,6 +1,7 @@
 This project is forked from [prebid/videojs-mailonline-plugin](https://github.com/prebid/videojs-mailonline-plugin)
 
-I created 2 branches with an update to be compatible with videojs 7.  I did not create a PR becuase this fix breaks a bugfix from prebid's fork (which I determined does not affect me and my use case).  I also created the no-moat branch which removes moat as I also do not currently require them as a vendor in my use case.
+I created 2 branches with an update to be compatible with videojs 7.  I did not create a PR becuase this fix breaks a bugfix from prebid's fork ([VIDLA-4563](https://github.com/prebid/videojs-mailonline-plugin/pull/23) and [VIDLA-4391](https://github.com/prebid/videojs-mailonline-plugin/pull/15/commits/ba1ddc15136de77b770d306475463d785980dd8f) - which I determined does not affect me and my use case).  
+I also created the no-moat branch which removes moat as I also do not currently require them as a vendor in my use case.
 
 # videojs-vast-vpaid plugin
 
