@@ -36,10 +36,10 @@ var PROPS = {
     /* PLUGIN PROPERTIES */
 
     plugin: {
-        entry_file: './src/scripts/videojs_5.vast.vpaid.js',
+        entry_file: './src/scripts/videojs_7.vast.vpaid.js',
         output_file: {
-            development: 'videojs_5.vast.vpaid.js',
-            production: 'videojs_5.vast.vpaid.min.js',
+            development: 'videojs_7.vast.vpaid.js',
+            production: 'videojs_7.vast.vpaid.min.js',
         },
         bannerText: pluginBannerText
     },
